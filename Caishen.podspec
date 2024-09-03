@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/prolificinteractive/caishen.git"
   s.license          = 'MIT'
   s.author           = { "Daniel Vancura" => "daniel@prolificinteractive.com" }
-  s.source           = { :git => "https://github.com/prolificinteractive/caishen.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/prolificinteractive/caishen.git", :branch => "chore/swift-package-support" }
 
   s.platform     = :ios, '12.0'
   s.requires_arc = true
