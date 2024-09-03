@@ -9,7 +9,7 @@
 import UIKit
 import Caishen
 
-class ViewController: UIViewController, CardTextFieldDelegate, CardIOPaymentViewControllerDelegate {
+class ViewController: UIViewController, CardTextFieldDelegate {
     
     @IBOutlet weak var buyButton: UIButton?
     @IBOutlet weak var cardNumberTextField: CardTextField!
@@ -40,23 +40,23 @@ class ViewController: UIViewController, CardTextFieldDelegate, CardIOPaymentView
     
     func cardTextFieldShouldProvideAccessoryAction(_ cardTextField: CardTextField) -> (() -> ())? {
         return { [weak self] in
-            guard let cardIOViewController = CardIOPaymentViewController(paymentDelegate: self) else {
-                return
-            }
-            self?.present(cardIOViewController, animated: true, completion: nil)
+//            guard let cardIOViewController = CardIOPaymentViewController(paymentDelegate: self) else {
+//                return
+//            }
+//            self?.present(cardIOViewController, animated: true, completion: nil)
         }
     }
     
     // MARK: - Card.io delegate methods
     
-    func userDidCancel(_ paymentViewController: CardIOPaymentViewController!) {
-        paymentViewController.dismiss(animated: true, completion: nil)
-    }
-    
-    func userDidProvide(_ cardInfo: CardIOCreditCardInfo!, in paymentViewController: CardIOPaymentViewController!) {
-        cardNumberTextField.prefill(cardInfo.cardNumber, month: Int(cardInfo.expiryMonth), year: Int(cardInfo.expiryYear), cvc: cardInfo.cvv)
-        paymentViewController.dismiss(animated: true, completion: nil)
-    }
+//    func userDidCancel(_ paymentViewController: CardIOPaymentViewController!) {
+//        paymentViewController.dismiss(animated: true, completion: nil)
+//    }
+//    
+//    func userDidProvide(_ cardInfo: CardIOCreditCardInfo!, in paymentViewController: CardIOPaymentViewController!) {
+//        cardNumberTextField.prefill(cardInfo.cardNumber, month: Int(cardInfo.expiryMonth), year: Int(cardInfo.expiryYear), cvc: cardInfo.cvv)
+//        paymentViewController.dismiss(animated: true, completion: nil)
+//    }
 
 }
 
