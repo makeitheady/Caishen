@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "Caishen"
-  s.version          = "2.2.1"
+  s.version          = "3.0.0"
   s.summary          = "A Payment Card UI & Validator for iOS"
 
 # This description is used to generate tags and improve search results.
@@ -29,6 +29,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.swift_version = '4.2'
 
-  s.source_files = 'Pod/Classes/**/*'
-  s.resources = ['Pod/Assets/*', 'Pod/Resources/*']
+  s.source_files = 'Sources/CaishenPackage/**/*'
+  s.resources = ['Sources/Assets/*']
 end
