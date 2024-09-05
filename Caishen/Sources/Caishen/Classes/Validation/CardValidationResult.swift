@@ -26,7 +26,7 @@ public struct CardValidationResult: OptionSet {
     }
     
     // MARK: - Default declarations
-    public static let Valid                   = CardValidationResult(rawValue: 0)
+    public static let Valid = CardValidationResult([])
     
     /** 
      Card number does not match the specified type or is too long.

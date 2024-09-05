@@ -126,7 +126,7 @@ extension CardTextField {
         }
     }
     
-    open func translateCardNumberIn() {
+    public func translateCardNumberIn() {
         if isRightToLeftLanguage {
             UIView.performWithoutAnimation {
                 self.numberInputTextField?.alpha = 1
