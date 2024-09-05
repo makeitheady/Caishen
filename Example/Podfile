@@ -3,7 +3,6 @@ use_frameworks!
 
 target 'Caishen_Example' do
   pod 'Caishen', :path => '../'
-  pod 'CardIO'
 end
 
 target 'Caishen_Tests' do
