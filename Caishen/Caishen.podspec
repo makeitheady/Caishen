@@ -29,6 +29,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.swift_version = '5.0'
 
-  s.source_files = 'Sources/Caishen/Classes/**/*'
-  s.resources = ['Sources/Assets/*']
+  s.source_files = 'Caishen/Sources/Caishen/Classes/**/*'
+  s.resources = ['Caishen/Sources/Assets/*']
 end
