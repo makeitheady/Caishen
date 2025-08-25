@@ -9,7 +9,7 @@
 import UIKit
 import Caishen
 
-class ViewController: UIViewController, CardTextFieldDelegate, CardIOPaymentViewControllerDelegate {
+class ViewController: UIViewController, @preconcurrency CardTextFieldDelegate, CardIOPaymentViewControllerDelegate {
     
     @IBOutlet weak var buyButton: UIButton?
     @IBOutlet weak var cardNumberTextField: CardTextField!

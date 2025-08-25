@@ -16,7 +16,7 @@ private let gregorianCalendar = Calendar(identifier: Calendar.Identifier.gregori
 public struct Expiry: RawRepresentable {
 
     /// An invalid expiry date. This date is set to 1/1/1970 and therefor will be shown as `expired`.
-    public static let invalid = Expiry(rawValue: Date(timeIntervalSince1970: 0))
+    nonisolated(unsafe) public static let invalid = Expiry(rawValue: Date(timeIntervalSince1970: 0))
 
     public typealias RawValue = Date
 

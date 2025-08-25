@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension CardTextField: CardInfoTextFieldDelegate {
+extension CardTextField: @preconcurrency CardInfoTextFieldDelegate {
 
     open func textField(_ textField: UITextField, didEnterValidInfo: String) {
         updateNumberColor()

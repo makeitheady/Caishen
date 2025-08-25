@@ -11,7 +11,7 @@ import UIKit
 /**
  A `CardNumberFormatter` provides the formatting of card numbers based on their card type.
  */
-public final class CardNumberFormatter {
+@MainActor public final class CardNumberFormatter {
 
     /// The separator which is used to separate different groups of a card number.
     public let separator: String
