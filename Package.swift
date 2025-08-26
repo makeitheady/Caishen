@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,20 +15,22 @@ let package = Package(
             name: "Caishen",
             targets: ["Caishen"]
         ),
+        .library(name: "CardIO",
+                 targets: ["CardIO"]),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Caishen"
-        ),
-        .executableTarget(
-            name: "Example",
-            dependencies: ["Caishen"],
-            path: "Example/Caishen",
+            name: "Caishen",
+            dependencies: ["CardIO"],
+            path: "Sources/Caishen",
             resources: [
-                .process("Resources")       // for .xib, .storyboard, etc.
-            ], 
+                .process("Resources")     // for .xib, .storyboard, etc.
+            ],
+            publicHeadersPath: "include"
+        ),
+        .target(
+            name: "CardIO",
+            path: "Sources/CardIO",
             publicHeadersPath: "include"
         ),
         .testTarget(

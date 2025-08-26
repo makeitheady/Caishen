@@ -18,7 +18,7 @@ extension CardTextField {
      - parameter year:       The year that should be shown in the year input field.
      - parameter cvc:        The CVC that should be shown in the CVC input field.
      */
-    open func prefill(_ number: String?, month: Int?, year: Int?, cvc: String?) {
+    public func prefill(_ number: String?, month: Int?, year: Int?, cvc: String?) {
         if let year = year {
             var trimmedYear = year
             if year > 100 {

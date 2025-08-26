@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 
-public protocol CardTextFieldDelegate: class {
+@MainActor
+public protocol CardTextFieldDelegate: AnyObject {
     
     /**
      Callback for a CardTextField, which is called whenever the entered Card information has changed.

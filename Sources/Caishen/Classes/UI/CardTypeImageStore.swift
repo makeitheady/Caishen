@@ -33,11 +33,11 @@ public protocol CardTypeImageStore {
 
 extension Bundle: CardTypeImageStore {
 
-    open func image(for cardType: CardType) -> UIImage? {
+    public func image(for cardType: CardType) -> UIImage? {
         return UIImage(named: cardType.name, in: self, compatibleWith: nil)
     }
 
-    open func cvcImage(for cardType: CardType) -> UIImage? {
+    public func cvcImage(for cardType: CardType) -> UIImage? {
         let cvcImageName: String
         if cardType.isEqual(to: AmericanExpress()) {
             cvcImageName = "AmexCVC"
