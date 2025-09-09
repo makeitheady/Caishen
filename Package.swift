@@ -22,11 +22,9 @@ let package = Package(
         .target(
             name: "Caishen",
             dependencies: ["CardIO"],
-            path: "Sources/Caishen",
             resources: [
                 .process("Resources")     // for .xib, .storyboard, etc.
-            ],
-            publicHeadersPath: "include"
+            ]
         ),
         .target(
             name: "CardIO",
