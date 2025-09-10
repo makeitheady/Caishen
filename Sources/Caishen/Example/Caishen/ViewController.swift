@@ -10,7 +10,7 @@ import UIKit
 import CardIO
 
 @MainActor
-class ViewController: UIViewController, CardTextFieldDelegate, CardIOPaymentViewControllerDelegate {
+class ViewController: UIViewController, CardTextFieldDelegate {
     
     @IBOutlet weak var buyButton: UIButton?
     @IBOutlet weak var cardNumberTextField: CardTextField!
@@ -40,11 +40,11 @@ class ViewController: UIViewController, CardTextFieldDelegate, CardIOPaymentView
     }
     
     func cardTextFieldShouldProvideAccessoryAction(_ cardTextField: CardTextField) -> (() -> ())? {
-        return { [weak self] in
-            guard let cardIOViewController = CardIOPaymentViewController(paymentDelegate: self) else {
-                return
-            }
-            self?.present(cardIOViewController, animated: true, completion: nil)
+        return {
+//            guard let cardIOViewController = CardIOPaymentViewController(paymentDelegate: self) else {
+//                return
+//            }
+//            self?.present(cardIOViewController, animated: true, completion: nil)
         }
     }
     
