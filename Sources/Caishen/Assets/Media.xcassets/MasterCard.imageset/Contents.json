@@ -1,23 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "Method=Mastercard.png",
       "idiom" : "universal",
-      "filename" : "MasterCard.png",
       "scale" : "1x"
     },
     {
+      "filename" : "Method=Mastercard@2x.png",
       "idiom" : "universal",
-      "filename" : "MasterCard@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "Method=Mastercard@3x.png",
       "idiom" : "universal",
-      "filename" : "MasterCard@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

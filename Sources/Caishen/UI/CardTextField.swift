@@ -55,12 +55,27 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
      The text field which is used to enter the year of the expiry date.
      */
     @IBOutlet open weak var yearTextField: YearInputTextField!
-    
-    /**
-     The view which is slided in from the right after a valid card number has been entered.
-     */
-    @IBOutlet open weak var cardInfoView: UIView?
 
+    @IBOutlet open weak var cvcImageView: UIImageView?
+    
+    @IBOutlet open weak var cardNumberTitle: UILabel!
+    
+    @IBOutlet open weak var expDateTitle: UILabel!
+    
+    @IBOutlet open weak var cvcTitle: UILabel!
+    
+    @IBOutlet open weak var cardNumberMessage: UILabel!
+    
+    @IBOutlet open weak var expDateMessage: UILabel!
+    
+    @IBOutlet open weak var cvcMessage: UILabel!
+    
+    @IBOutlet open weak var cardNumberContainer: UIView!
+    
+    @IBOutlet open weak var expDateContainer: UIView!
+    
+    @IBOutlet open weak var cvcContainer: UIView!
+    
     /// The image store for the card number text field.
     open var cardTypeImageStore: CardTypeImageStore = {
         #if SWIFT_PACKAGE
@@ -79,9 +94,9 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     /**
      The string value that is used to separate the different groups of a card number in the text field.
      */
-    @IBInspectable open var cardNumberSeparator: String? = " - " {
+    @IBInspectable open var cardNumberSeparator: String? = " " {
         didSet {
-            numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " - "
+            numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " "
         }
     }
     
@@ -106,7 +121,7 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     /**
      The label which is used as separator inbetween the text fields for month and year of the card expiry.
      */
-    @IBOutlet weak var slashLabel: UILabel!
+    @IBOutlet open weak var slashLabel: UILabel!
     
     /**
      The view constraint which insets the card image view from its superview's leading edge.
@@ -306,23 +321,37 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
         accessoryButtonTrailingConstraint?.constant = accessoryButtonTrailingInset
         
         // Reset gesture recognizers
-        [firstObjectInNib, cardInfoView].forEach({$0?.gestureRecognizers = []})
-        
-        let hideCardNumberSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeHideCardNumber))
-        hideCardNumberSwipeRecognizer.direction = isRightToLeftLanguage ? .right : .left
-        firstObjectInNib.addGestureRecognizer(hideCardNumberSwipeRecognizer)
-        
-        [firstObjectInNib, cardInfoView].forEach({
-            let showCardNumberSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberInAnimated))
-            showCardNumberSwipeRecognizer.direction = isRightToLeftLanguage ? .left : .right
-            $0?.addGestureRecognizer(showCardNumberSwipeRecognizer)
-        })
+        [firstObjectInNib].forEach({$0?.gestureRecognizers = []})
         
         setupTextFieldDelegates()
         setupTextFieldAttributes()
         setupTargetsForEditingBegin()
         setupAccessoryButton()
         setupAccessibilityLabels()
+        setupTitles()
+        setupContainers()
+        setupMessages()
+    }
+    
+    private func setupContainers() {
+        [cardNumberContainer, expDateContainer, cvcContainer].forEach { view in
+            view?.layer.cornerRadius = 4.0
+            view?.layer.borderColor = UIColor.lightGray.cgColor
+            view?.layer.borderWidth = 1.0
+        }
+    }
+    
+    private func setupTitles() {
+        [cardNumberTitle, expDateTitle, cvcTitle].forEach { label in
+            label?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        }
+    }
+    
+    private func setupMessages() {
+        [cardNumberMessage, expDateMessage, cvcMessage].forEach { label in
+            label?.text = nil
+            label?.isHidden = true
+        }
     }
     
     private func setupTextFieldDelegates() {
@@ -336,7 +365,7 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
      Customizes text field attributes of subviews so that the appearance matches the appearance of `self`.
      */
     private func setupTextFieldAttributes() {
-        numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " - "
+        numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " "
         numberInputTextField?.placeholder = placeholder
         
         cvcTextField?.deleteBackwardCallback = { [weak self] _ in
@@ -405,9 +434,6 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
      Adds a callback to `numberInputTextField`, `monthTextField` and `yearTextField` to show the card type image in `cardImageView` when editing on any of these text fields began. Adds a callback to cvcTextField to show the CVC image in this view in this case.
      */
     private func setupTargetsForEditingBegin() {
-        // Show the full number text field, if editing began on it
-        numberInputTextField?.addTarget(self, action: #selector(moveCardNumberInAnimated), for: UIControl.Event.editingDidBegin)
-        
         // Show CVC image if the cvcTextField is selected, show card image otherwise
         let nonCVCTextFields: [UITextField?] = [numberInputTextField, monthTextField, yearTextField]
         nonCVCTextFields.forEach({$0?.addTarget(self, action: #selector(showCardImage), for: .editingDidBegin)})
@@ -419,11 +445,6 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
      */
     @objc internal func buttonReceivedAction() {
         cardTextFieldDelegate?.cardTextFieldShouldProvideAccessoryAction(self)?()
-    }
-
-    /// Function for the swipe gesture recognizer for moving out the card number.
-    @objc private func swipeHideCardNumber() {
-        moveCardNumberOutAnimated(remainFirstResponder: isFirstResponder)
     }
 
     /**
@@ -449,22 +470,6 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     // MARK: - View lifecycle
-    
-    open override func willMove(toSuperview newSuperview: UIView?) {
-        super.willMove(toSuperview: newSuperview)
-        if let secondaryView = cardInfoView {
-            if secondaryView.superview != superview {
-                superview?.addSubview(secondaryView)
-            }
-        }
-        
-        cardInfoView?.frame = bounds
-    }
-    
-    open override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        translateCardNumberIn()
-    }
     
     // MARK: - View customization
     
@@ -515,9 +520,6 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     open func numberInputTextFieldDidComplete(_ numberInputTextField: NumberInputTextField) {
-        // Retain the first responder status if currently first responder.
-        moveCardNumberOutAnimated(remainFirstResponder: isFirstResponder)
-        
         notifyDelegate()
         hideExpiryTextFields = !cardTypeRegister.cardType(for: numberInputTextField.cardNumber).requiresExpiry
         hideCVCTextField = !cardTypeRegister.cardType(for: numberInputTextField.cardNumber).requiresCVC
@@ -549,20 +551,11 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
         let cardType = cardTypeRegister.cardType(for: numberInputTextField.cardNumber)
         let cvcImage = cardTypeImageStore.cvcImage(for: cardType)
         
-        cardImageView?.image = cvcImage
+        cvcImageView?.image = cvcImage
         cvcTextField?.cardType = cardType
     }
     
     // MARK: - UIView
-    
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // If moving to a larger screen size and not showing the detail view, make sure that it is outside the view.
-        if let transform = cardInfoView?.transform, !transform.isIdentity {
-            translateCardNumberIn()
-        }
-    }
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Detect touches in card number text field as long as the detail view is on top of it

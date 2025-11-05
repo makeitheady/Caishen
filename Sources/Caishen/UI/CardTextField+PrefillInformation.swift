@@ -43,8 +43,6 @@ extension CardTextField {
             cvcTextField?.prefill(cvc)
         }
 
-        moveCardNumberOutAnimated(remainFirstResponder: isFirstResponder)
-        
         notifyDelegate()
     }
 }
