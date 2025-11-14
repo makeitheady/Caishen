@@ -12,7 +12,7 @@
 public struct UnknownCardType: CardType {
 
     public let name = "Unknown"
-    public let CVCLength = 0
+    public let CVCLength = 3
     public let identifyingDigits: Set<Int> = []
 
     public func validate(number: Number) -> CardValidationResult {
@@ -20,14 +20,6 @@ public struct UnknownCardType: CardType {
             .union(lengthMatchesType(number.length))
             .union(numberIsNumeric(number))
             .union(numberIsValidLuhn(number))
-    }
-
-    public func validate(cvc: CVC) -> CardValidationResult {
-        return .UnknownType
-    }
-
-    public func validate(expiry: Expiry) -> CardValidationResult {
-        return .UnknownType
     }
 
     public init() {

@@ -368,16 +368,6 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
         numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " "
         numberInputTextField?.placeholder = placeholder
         
-        cvcTextField?.deleteBackwardCallback = { [weak self] _ in
-            if self?.hideExpiryTextFields == true {
-                self?.numberInputTextField.becomeFirstResponder()
-            } else {
-                self?.yearTextField?.becomeFirstResponder()
-            }
-        }
-        monthTextField?.deleteBackwardCallback = { [weak self] _ in
-            self?.numberInputTextField?.becomeFirstResponder()
-        }
         yearTextField?.deleteBackwardCallback = { [weak self] _ in
             if self?.hideExpiryTextFields == true {
                 self?.numberInputTextField.becomeFirstResponder()
@@ -553,21 +543,6 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
         
         cvcImageView?.image = cvcImage
         cvcTextField?.cardType = cardType
-    }
-    
-    // MARK: - UIView
-    
-    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Detect touches in card number text field as long as the detail view is on top of it
-        touches.forEach({ touch -> () in
-            let point = touch.location(in: numberInputTextField)
-            if (numberInputTextField?.point(inside: point, with: event) ?? false) && [monthTextField,yearTextField,cvcTextField, slashLabel].reduce(true, { (currentValue: Bool, view: UIView?) -> Bool in
-                let pointInView = touch.location(in: view)
-                return currentValue && !(view?.point(inside: pointInView, with: event) ?? false)
-            }) {
-                numberInputTextField?.becomeFirstResponder()
-            }
-        })
     }
     
     // MARK: Accessibility

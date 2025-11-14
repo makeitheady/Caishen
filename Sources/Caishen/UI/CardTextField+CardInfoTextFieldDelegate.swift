@@ -42,17 +42,15 @@ extension CardTextField: CardInfoTextFieldDelegate {
             }
         }
 
+        if let prefillText = prefillText {
+            _ = nextTextField?.delegate?.textField?(nextTextField!, shouldChangeCharactersIn: NSMakeRange(0, (nextTextField?.text ?? "").count), replacementString: prefillText)
+        }
+        
         // Let the next text field become first responder if one of the contained text fields
         // already is first responder.
         if isFirstResponder {
             nextTextField?.becomeFirstResponder()
         }
-
-        guard let prefillText = prefillText else {
-            return
-        }
-        
-        _ = nextTextField?.delegate?.textField?(nextTextField!, shouldChangeCharactersIn: NSMakeRange(0, (nextTextField?.text ?? "").count), replacementString: prefillText)
     }
     
     /**

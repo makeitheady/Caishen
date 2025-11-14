@@ -16,8 +16,9 @@ internal extension UITextField {
      
      - note: This character was chosen in favor of other (even shorter) empty text characters, which caused unexpected behavior when used in a right-aligned text field (the cursor jumped to the left when starting editing).
      */
-    internal static var emptyTextFieldCharacter: String {
-        return "\u{202F}"
+    static var emptyTextFieldCharacter: String {
+        // The empty text field character is not required for separate text fields 
+        return ""
     }
 }
 
