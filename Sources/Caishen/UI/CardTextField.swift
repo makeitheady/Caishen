@@ -62,7 +62,13 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     @IBOutlet open weak var cardInfoView: UIView?
 
     /// The image store for the card number text field.
-    open var cardTypeImageStore: CardTypeImageStore = Bundle(for: CardTextField.self)
+    open var cardTypeImageStore: CardTypeImageStore = {
+        #if SWIFT_PACKAGE
+        return Bundle.module
+        #else
+        return Bundle(for: CardTextField.self)
+        #endif
+    }()
 
     open weak var cardTextFieldDelegate: CardTextFieldDelegate? {
         didSet {
@@ -473,7 +479,11 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
      You can override this function to provide the NSBundle for your own Nib. If you do so, please override 'getNibName' as well to provide the right Nib to load the nib file.
      */
     open func getNibBundle() -> Bundle {
+#if SWIFT_PACKAGE
+        return Bundle.module
+#else
         return Bundle(for: CardTextField.self)
+#endif
     }
     
     // MARK: - CardNumberInputTextFieldDelegate
