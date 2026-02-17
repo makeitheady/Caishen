@@ -1,6 +1,6 @@
 ![Caishen](caishen.jpg)
 
-[![Travis build status](https://img.shields.io/travis/prolificinteractive/Caishen.svg?style=flat-square)](https://travis-ci.org/prolificinteractive/Caishen)
+[![CI](https://github.com/makeitheady/Caishen/actions/workflows/ci.yml/badge.svg)](https://github.com/makeitheady/Caishen/actions/workflows/ci.yml)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/Caishen.svg?style=flat-square)](https://img.shields.io/cocoapods/v/Caishen.svg)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat-square)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/cocoapods/p/Caishen.svg?style=flat-square)](http://cocoadocs.org/docsets/Caishen)
@@ -15,7 +15,8 @@ Caishen provides an easy-to-use text field to ask users for payment card informa
 ## Requirements
 
 * iOS 8.0+
-* Xcode 10.0+
+* Swift 5.7+
+* Xcode 14.0+
 
 ## Installation
 
@@ -309,6 +310,31 @@ class ViewController: UIViewController, NumberInputTextFieldDelegate, CardInfoTe
     // ...
 }
 ```
+
+## Linting
+
+Caishen uses [SwiftLint](https://github.com/realm/SwiftLint) to enforce code style and quality standards.
+
+### Running SwiftLint Locally
+
+1. Install SwiftLint:
+```bash
+brew install swiftlint
+```
+
+2. Run SwiftLint from the project root:
+```bash
+swiftlint lint
+```
+
+3. To automatically fix some issues:
+```bash
+swiftlint autocorrect
+```
+
+### CI Integration
+
+SwiftLint runs automatically on all pull requests via GitHub Actions. The CI will fail if linting issues are detected, so please run SwiftLint locally before submitting a PR.
 
 ## Contributing to Caishen
 

@@ -33,12 +33,8 @@ extension String {
      - returns: True if this string contains only digits.
      */
     func isNumeric() -> Bool {
-        return reduce(true, { (result, value) in
-            let string = String(value)
-            guard let firstChar = string.utf16.first else {
-                return result
-            }
-            return result && CharacterSet.decimalDigits.contains(UnicodeScalar(firstChar)!)}
-        )
+        return !isEmpty && allSatisfy { character in
+            character.isNumber
+        }
     }
 }
