@@ -12,7 +12,7 @@ private let gregorianCalendar = Calendar(identifier: Calendar.Identifier.gregori
 
 // Static regex for parsing expiry date strings
 private let expiryRegex: NSRegularExpression = {
-    // This pattern is guaranteed to be valid
+    // This pattern is guaranteed to be valid - swiftlint:disable:next force_try
     return try! NSRegularExpression(pattern: "^(\\d{1,2})[/|-](\\d{1,4})", options: .caseInsensitive)
 }()
 
@@ -30,12 +30,14 @@ public struct Expiry: RawRepresentable {
 
     /// The month of the expiration date.
     public var month: UInt {
-        return UInt(components().month ?? 1)
+        // components() is guaranteed to return valid values since rawValue is always a valid Date
+        return UInt(components().month!)
     }
 
     /// The year of the expiration date.
     public var year: UInt {
-        return UInt(components().year ?? 1970)
+        // components() is guaranteed to return valid values since rawValue is always a valid Date
+        return UInt(components().year!)
     }
 
     /**
