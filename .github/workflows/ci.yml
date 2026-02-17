@@ -34,19 +34,21 @@ jobs:
       uses: actions/checkout@v3
       
     - name: Select Xcode
-      run: sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer
+      run: sudo xcode-select -s /Applications/Xcode_14.3.1.app/Contents/Developer
       
     - name: Show Xcode version
       run: xcodebuild -version
+      
+    - name: Show available simulators
+      run: xcrun simctl list devices available
       
     - name: Run tests
       run: |
         xcodebuild test \
           -project Caishen.xcodeproj \
           -scheme CaishenTests \
-          -destination 'platform=iOS Simulator,name=iPhone 14,OS=17.0' \
-          -enableCodeCoverage YES \
-          | xcpretty && exit ${PIPESTATUS[0]}
+          -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
+          -enableCodeCoverage YES
   
   pod-lint:
     name: Pod Lib Lint
