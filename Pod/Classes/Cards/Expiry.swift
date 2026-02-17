@@ -10,6 +10,12 @@ import Foundation
 
 private let gregorianCalendar = Calendar(identifier: Calendar.Identifier.gregorian)
 
+// Static regex for parsing expiry date strings
+private let expiryRegex: NSRegularExpression = {
+    // This pattern is guaranteed to be valid
+    return try! NSRegularExpression(pattern: "^(\\d{1,2})[/|-](\\d{1,4})", options: .caseInsensitive)
+}()
+
 /**
  A Credit Card Expiry date.
  */
@@ -43,11 +49,10 @@ public struct Expiry: RawRepresentable {
             return nil
         }
         
-        let regex = try! NSRegularExpression(pattern: "^(\\d{1,2})[/|-](\\d{1,4})", options: .caseInsensitive)
         var monthStr: String = ""
         var yearStr: String = ""
         
-        guard let match = regex.firstMatch(in: string, options: .reportProgress, range: NSMakeRange(0, string.count)) else {
+        guard let match = expiryRegex.firstMatch(in: string, options: .reportProgress, range: NSMakeRange(0, string.count)) else {
             return nil
         }
         

@@ -188,25 +188,27 @@ extension CardType {
     public func numberIsValidLuhn(_ number: Number) -> CardValidationResult {
         var odd = true
         var sum = 0
-        let digits = NSMutableArray(capacity: number.length)
+        var digits: [String] = []
         for i in 0..<number.length {
             // If the number is not long enough, fail the Luhn test
             guard let digit = number.description[i,i+1] else {
                 return CardValidationResult.LuhnTestFailed
             }
-            digits.add(NSString(string: digit))
+            digits.append(digit)
         }
-        for obj in digits.reverseObjectEnumerator() {
-            let digitString = obj as! NSString
-            var digit = digitString.integerValue
+        for digitString in digits.reversed() {
+            guard let digit = Int(digitString) else {
+                return CardValidationResult.LuhnTestFailed
+            }
+            var digitValue = digit
             odd = !odd
             if odd {
-                digit = digit * 2
+                digitValue = digitValue * 2
             }
-            if digit > 9 {
-                digit = digit - 9
+            if digitValue > 9 {
+                digitValue = digitValue - 9
             }
-            sum += digit
+            sum += digitValue
         }
 
         if sum % 10 == 0 {
