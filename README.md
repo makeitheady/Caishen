@@ -15,7 +15,8 @@ Caishen provides an easy-to-use text field to ask users for payment card informa
 ## Requirements
 
 * iOS 8.0+
-* Xcode 10.0+
+* Swift 5.7+
+* Xcode 14.0+
 
 ## Installation
 
@@ -309,6 +310,31 @@ class ViewController: UIViewController, NumberInputTextFieldDelegate, CardInfoTe
     // ...
 }
 ```
+
+## Linting
+
+Caishen uses [SwiftLint](https://github.com/realm/SwiftLint) to enforce code style and quality standards.
+
+### Running SwiftLint Locally
+
+1. Install SwiftLint:
+```bash
+brew install swiftlint
+```
+
+2. Run SwiftLint from the project root:
+```bash
+swiftlint lint
+```
+
+3. To automatically fix some issues:
+```bash
+swiftlint autocorrect
+```
+
+### CI Integration
+
+SwiftLint runs automatically on all pull requests via GitHub Actions. The CI will fail if linting issues are detected, so please run SwiftLint locally before submitting a PR.
 
 ## Contributing to Caishen
 

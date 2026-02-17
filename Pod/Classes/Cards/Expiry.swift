@@ -24,12 +24,12 @@ public struct Expiry: RawRepresentable {
 
     /// The month of the expiration date.
     public var month: UInt {
-        return UInt(components().month!)
+        return UInt(components().month ?? 1)
     }
 
     /// The year of the expiration date.
     public var year: UInt {
-        return UInt(components().year!)
+        return UInt(components().year ?? 1970)
     }
 
     /**
